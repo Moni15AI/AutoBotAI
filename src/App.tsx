@@ -1,50 +1,70 @@
-import React from 'react';
-import { Bot, MessageSquare, Database, ChevronRight, Terminal } from 'lucide-react';
+import React, { useState } from 'react';
+import { Bot, MessageSquare, Database, ChevronRight, Terminal, Calendar, X } from 'lucide-react';
 
 function App() {
+  const [showBooking, setShowBooking] = useState(false);
+
   return (
-    <div className="min-h-screen bg-black text-white font-mono">
+    <div className="min-h-screen bg-black text-white font-mono overflow-hidden">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-black/50 backdrop-blur-lg border-b border-white/10">
+      <nav className="fixed top-0 w-full z-50 bg-black/50 backdrop-blur-lg border-b border-white/5">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <Terminal className="w-6 h-6" />
-            <span className="text-lg font-bold tracking-wider">AUTOBOT.AI</span>
+            <span className="text-lg font-light tracking-[0.3em]">AUTOBOT.AI</span>
           </div>
-          <button className="px-4 py-2 border border-white/20 rounded hover:bg-white/10 transition-all duration-300">
-            Connect
-          </button>
+          <div className="flex space-x-8 text-sm tracking-wider font-light">
+            <button className="hover:text-purple-400 transition-colors">ABOUT</button>
+            <button className="hover:text-purple-400 transition-colors">DOCS</button>
+            <button 
+              onClick={() => setShowBooking(true)}
+              className="px-4 py-2 border border-white/10 hover:border-purple-400/50 transition-all duration-300"
+            >
+              CONNECT
+            </button>
+          </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <div className="relative min-h-screen flex items-center justify-center">
-        {/* Animated background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_80%)]"></div>
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.8),transparent_50%,rgba(0,0,0,0.8))]"></div>
-        </div>
+      <div className="relative min-h-screen flex items-center justify-center grid-background">
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/20 to-black/50"></div>
         
+        {/* Animated Circle */}
+        <div className="absolute">
+          <div className="glow-circle"></div>
+        </div>
+
         {/* Content */}
         <div className="container mx-auto px-4 relative z-10 mt-16">
-          <div className="text-center max-w-4xl mx-auto">
-            <Bot className="w-16 h-16 mx-auto mb-8 opacity-50" />
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 glitch-effect tracking-tighter">
-              NEXT GENERATION
-              <br />
-              AI AUTOMATION
+          <div className="text-center">
+            <h1 className="pixel-text text-6xl md:text-7xl font-thin mb-8 tracking-[0.2em] glitch-effect">
+              AUTOBOT
+              <span className="text-purple-400">.AI</span>
             </h1>
-            <div className="h-16 overflow-hidden my-8">
-              <div className="animate-text-slide">
-                <p className="text-xl h-16 flex items-center justify-center text-white/70">&gt; Intelligent Chat Agents_</p>
-                <p className="text-xl h-16 flex items-center justify-center text-white/70">&gt; Advanced Automation_</p>
-                <p className="text-xl h-16 flex items-center justify-center text-white/70">&gt; CRM Integration_</p>
-                <p className="text-xl h-16 flex items-center justify-center text-white/70">&gt; 24/7 Operation_</p>
-                <p className="text-xl h-16 flex items-center justify-center text-white/70">&gt; Real-time Analytics_</p>
-                <p className="text-xl h-16 flex items-center justify-center text-white/70">&gt; Seamless Deployment_</p>
+            <p className="text-lg md:text-xl font-light tracking-wider text-white/70 mb-12">
+              NEXT GENERATION AUTOMATION PROTOCOL
+            </p>
+            
+            <div className="flex justify-center space-x-24 my-16">
+              <div className="text-center">
+                <div className="text-3xl font-light mb-2 glow-effect">2.5M+</div>
+                <div className="text-sm text-white/50 tracking-wider">AUTOMATIONS</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-light mb-2 glow-effect">99.9%</div>
+                <div className="text-sm text-white/50 tracking-wider">UPTIME</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-light mb-2 glow-effect">0.001s</div>
+                <div className="text-sm text-white/50 tracking-wider">LATENCY</div>
               </div>
             </div>
-            <button className="group border border-white/20 bg-white/5 text-white px-8 py-4 rounded-none text-lg font-medium hover:bg-white hover:text-black transition-all duration-500">
+
+            <button 
+              onClick={() => setShowBooking(true)}
+              className="group px-8 py-4 border border-white/10 hover:border-purple-400/50 transition-all duration-500 tracking-wider"
+            >
               INITIALIZE SYSTEM
               <ChevronRight className="inline-block ml-2 group-hover:translate-x-1 transition-transform" />
             </button>
@@ -53,38 +73,32 @@ function App() {
       </div>
 
       {/* Features Section */}
-      <div className="py-24 border-t border-white/10">
+      <div className="py-24 relative overflow-hidden">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-12">
             {/* Chat & Phone AI */}
-            <div className="group p-8 border border-white/10 hover:border-white/30 transition-all duration-500">
-              <div className="mb-6">
-                <MessageSquare className="w-12 h-12 opacity-50 group-hover:opacity-100 transition-opacity" />
-              </div>
-              <h3 className="text-xl font-bold mb-4 tracking-wider">COMMUNICATION.AI</h3>
-              <p className="text-white/50 text-sm leading-relaxed">
+            <div className="group p-8 border border-white/5 hover:border-purple-400/30 transition-all duration-500 bg-black/50 backdrop-blur-sm">
+              <MessageSquare className="w-12 h-12 mb-6 opacity-50 group-hover:opacity-100 transition-opacity" />
+              <h3 className="text-xl font-light mb-4 tracking-wider">COMMUNICATION.AI</h3>
+              <p className="text-white/50 text-sm leading-relaxed font-light">
                 Intelligent agents providing human-like interactions through natural language processing.
               </p>
             </div>
 
             {/* Automation Solutions */}
-            <div className="group p-8 border border-white/10 hover:border-white/30 transition-all duration-500">
-              <div className="mb-6">
-                <Bot className="w-12 h-12 opacity-50 group-hover:opacity-100 transition-opacity" />
-              </div>
-              <h3 className="text-xl font-bold mb-4 tracking-wider">SYSTEM.AUTOMATE</h3>
-              <p className="text-white/50 text-sm leading-relaxed">
+            <div className="group p-8 border border-white/5 hover:border-purple-400/30 transition-all duration-500 bg-black/50 backdrop-blur-sm">
+              <Bot className="w-12 h-12 mb-6 opacity-50 group-hover:opacity-100 transition-opacity" />
+              <h3 className="text-xl font-light mb-4 tracking-wider">SYSTEM.AUTOMATE</h3>
+              <p className="text-white/50 text-sm leading-relaxed font-light">
                 Advanced automation protocols for streamlined business operations and workflow optimization.
               </p>
             </div>
 
             {/* CRM Integration */}
-            <div className="group p-8 border border-white/10 hover:border-white/30 transition-all duration-500">
-              <div className="mb-6">
-                <Database className="w-12 h-12 opacity-50 group-hover:opacity-100 transition-opacity" />
-              </div>
-              <h3 className="text-xl font-bold mb-4 tracking-wider">DATA.SYNC</h3>
-              <p className="text-white/50 text-sm leading-relaxed">
+            <div className="group p-8 border border-white/5 hover:border-purple-400/30 transition-all duration-500 bg-black/50 backdrop-blur-sm">
+              <Database className="w-12 h-12 mb-6 opacity-50 group-hover:opacity-100 transition-opacity" />
+              <h3 className="text-xl font-light mb-4 tracking-wider">DATA.SYNC</h3>
+              <p className="text-white/50 text-sm leading-relaxed font-light">
                 Seamless integration with existing CRM infrastructure for enhanced data management.
               </p>
             </div>
@@ -92,19 +106,62 @@ function App() {
         </div>
       </div>
 
-      {/* Call to Action Section */}
-      <div className="py-24 border-t border-white/10">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8 tracking-tighter">READY TO UPGRADE?</h2>
-          <p className="text-white/50 mb-12 max-w-2xl mx-auto">
-            Join the next evolution of business automation. Deploy AI-powered solutions that scale with your enterprise.
-          </p>
-          <button className="group border border-white/20 bg-white/5 text-white px-8 py-4 rounded-none text-lg font-medium hover:bg-white hover:text-black transition-all duration-500">
-            REQUEST ACCESS
-            <ChevronRight className="inline-block ml-2 group-hover:translate-x-1 transition-transform" />
-          </button>
+      {/* Booking Modal */}
+      {showBooking && (
+        <div className="fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center p-4">
+          <div className="bg-black/80 border border-white/10 p-8 max-w-lg w-full relative">
+            <button 
+              onClick={() => setShowBooking(false)}
+              className="absolute top-4 right-4 text-white/50 hover:text-white"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <div className="flex items-center space-x-4 mb-6">
+              <Calendar className="w-8 h-8" />
+              <h3 className="text-2xl font-light tracking-wider">INITIALIZE CONNECTION</h3>
+            </div>
+            <form className="space-y-6">
+              <div>
+                <label className="block text-sm font-light text-white/70 mb-2 tracking-wider">IDENTIFIER</label>
+                <input 
+                  type="text" 
+                  className="w-full bg-white/5 border border-white/10 px-4 py-2 text-white focus:outline-none focus:border-purple-400/50"
+                  placeholder="Enter your name"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-light text-white/70 mb-2 tracking-wider">CONTACT</label>
+                <input 
+                  type="email" 
+                  className="w-full bg-white/5 border border-white/10 px-4 py-2 text-white focus:outline-none focus:border-purple-400/50"
+                  placeholder="Enter your email"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-light text-white/70 mb-2 tracking-wider">ORGANIZATION</label>
+                <input 
+                  type="text" 
+                  className="w-full bg-white/5 border border-white/10 px-4 py-2 text-white focus:outline-none focus:border-purple-400/50"
+                  placeholder="Enter your company name"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-light text-white/70 mb-2 tracking-wider">REQUIREMENTS</label>
+                <textarea 
+                  className="w-full bg-white/5 border border-white/10 px-4 py-2 text-white focus:outline-none focus:border-purple-400/50 h-32"
+                  placeholder="Describe your automation needs"
+                ></textarea>
+              </div>
+              <button 
+                type="submit"
+                className="w-full border border-white/10 hover:border-purple-400/50 py-3 font-light tracking-wider transition-all duration-300"
+              >
+                SUBMIT REQUEST
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
