@@ -21,8 +21,8 @@ const Features = () => {
     },
     {
       icon: <MessagesSquare className="w-10 h-10" />,
-      title: 'CEM Integration',
-      description: 'Seamless integration with your existing Customer Experience Management systems for unified automation.'
+      title: 'CRM Integration',
+      description: 'Seamless integration with your existing Customer Relationship Management systems for unified automation.'
     },
     {
       icon: <Cpu className="w-10 h-10" />,
