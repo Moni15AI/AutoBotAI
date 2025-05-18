@@ -34,10 +34,10 @@ const Header = () => {
         
         <div className="hidden md:flex items-center gap-8">
           <nav className="flex gap-6">
-            {['Services', 'About', 'Process', 'FAQ'].map((item) => (
+            {['Services', 'About', 'Case Studies', 'FAQ'].map((item) => (
               <a
                 key={item}
-                href={`#${item.toLowerCase()}`}
+                href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
                 className="relative text-gray-300 hover:text-white transition-colors duration-300 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-400 after:to-purple-500 after:left-0 after:bottom-0 after:transition-all hover:after:w-full"
               >
                 {item}
@@ -67,10 +67,10 @@ const Header = () => {
         } md:hidden`}
       >
         <nav className="flex flex-col gap-6 items-center">
-          {['Services', 'About', 'Process', 'FAQ'].map((item) => (
+          {['Services', 'About', 'Case Studies', 'FAQ'].map((item) => (
             <a
               key={item}
-              href={`#${item.toLowerCase()}`}
+              href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
               className="text-xl text-gray-300 hover:text-white transition-colors duration-300"
               onClick={() => setMobileMenuOpen(false)}
             >

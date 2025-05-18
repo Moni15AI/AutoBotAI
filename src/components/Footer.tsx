@@ -14,7 +14,7 @@ const Footer = () => {
       </div>
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-16">
           {/* Company Info */}
           <div>
             <div className="flex items-center gap-2 mb-6">
@@ -27,7 +27,7 @@ const Footer = () => {
               Transforming businesses through intelligent automation and AI-powered solutions.
             </p>
             <div className="flex space-x-4">
-              {['twitter', 'facebook', 'linkedin', 'github'].map((social) => (
+              {['twitter', 'facebook', 'linkedin'].map((social) => (
                 <a 
                   key={social}
                   href={`#${social}`}
@@ -46,7 +46,7 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-bold text-lg mb-6">Quick Links</h3>
             <ul className="space-y-3">
-              {['Services', 'About Us', 'Case Studies', 'Testimonials', 'Blog'].map((link) => (
+              {['Services', 'About', 'Case Studies', 'FAQ'].map((link) => (
                 <li key={link}>
                   <a href={`#${link.toLowerCase().replace(/\s+/g, '-')}`} className="text-gray-400 hover:text-white transition-colors">
                     {link}
@@ -81,28 +81,6 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          
-          {/* Newsletter */}
-          <div>
-            <h3 className="text-white font-bold text-lg mb-6">Subscribe</h3>
-            <p className="text-gray-400 mb-4">
-              Get the latest AI automation insights straight to your inbox.
-            </p>
-            <form className="flex">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="flex-1 px-4 py-2 rounded-l-lg bg-gray-800 border-gray-700 text-white focus:outline-none"
-              />
-              <button
-                type="submit"
-                className={`px-4 py-2 rounded-r-lg ${theme.accentBg} text-white`}
-              >
-                <span className="sr-only">Subscribe</span>
-                <Mail className="w-5 h-5" />
-              </button>
-            </form>
-          </div>
         </div>
         
         <div className="pt-8 border-t border-gray-800 text-center sm:flex sm:justify-between sm:text-left">
@@ -111,7 +89,7 @@ const Footer = () => {
           </p>
           <div className="mt-4 sm:mt-0">
             <ul className="flex flex-wrap justify-center sm:justify-end gap-6">
-              {['Privacy Policy', 'Terms of Service', 'Cookies'].map((item) => (
+              {['Privacy Policy', 'Terms of Service'].map((item) => (
                 <li key={item}>
                   <a href={`#${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-gray-500 hover:text-gray-400 transition-colors">
                     {item}
