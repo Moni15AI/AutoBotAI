@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useInView } from '../hooks/useInView';
@@ -8,6 +8,7 @@ const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(heroRef, { threshold: 0.1 });
   const headlineRef = useRef<HTMLHeadingElement>(null);
+  const [splineError, setSplineError] = useState(false);
 
   useEffect(() => {
     if (!headlineRef.current || !isInView) return;
@@ -33,6 +34,34 @@ const Hero = () => {
     });
   }, [isInView]);
 
+  // Remove Spline watermark after component mounts
+  useEffect(() => {
+    const removeWatermark = () => {
+      const style = document.createElement('style');
+      style.textContent = `
+        spline-viewer::part(watermark) { 
+          display: none !important;
+          opacity: 0 !important;
+          visibility: hidden !important;
+          pointer-events: none !important;
+        }
+        spline-viewer::part(logo) {
+          display: none !important;
+        }
+        spline-viewer {
+          pointer-events: none !important;
+        }
+      `;
+      document.head.appendChild(style);
+    };
+
+    removeWatermark();
+    
+    // Ensure watermark stays removed
+    const interval = setInterval(removeWatermark, 100);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section 
       ref={heroRef}
@@ -41,11 +70,29 @@ const Hero = () => {
     >
       {/* Spline Animation Background */}
       <div className="absolute inset-0 z-0">
-        <spline-viewer url="https://prod.spline.design/JIpKSMrxVp0XShhY/scene.splinecode" />
+        {!splineError ? (
+          <div className="w-full h-full">
+            <spline-viewer 
+              url="https://prod.spline.design/ly30ZHOVIbsTom8U/scene.splinecode"
+              loading-anim="true"
+              loading-style="dark"
+              background="transparent"
+              render-settings='{"quality": "ultra", "antialiasing": "ultra", "density": 4, "powerPreference": "high-performance", "clearColor": [0, 0, 0, 0]}'
+              className="w-full h-full object-cover"
+              style={{
+                imageRendering: 'high-quality',
+                transformStyle: 'preserve-3d'
+              }}
+              onError={() => setSplineError(true)}
+            />
+          </div>
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-gray-900 to-black"></div>
+        )}
       </div>
 
       {/* Content Overlay */}
-      <div className="absolute inset-0 bg-gray-950/60 backdrop-blur-sm z-10"></div>
+      <div className="absolute inset-0 bg-gray-950/40 backdrop-blur-[1px] z-10"></div>
 
       <div className="container mx-auto px-6 relative z-20">
         <div className="max-w-4xl mx-auto">

@@ -236,15 +236,12 @@ const ContactSection = () => {
                         onMouseLeave={handleMouseLeave}
                         className={`${theme.buttonStyles} w-full flex items-center justify-center gap-2 py-3 disabled:opacity-70 disabled:cursor-not-allowed relative bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-300`}
                         style={{
-                          '--x': `${mousePosition.x}px`,
-                          '--y': `${mousePosition.y}px`,
+                          '--x': mousePosition.x + 'px',
+                          '--y': mousePosition.y + 'px'
                         } as React.CSSProperties}
                       >
                         <div 
                           className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(255,255,255,0.3)_10%,transparent_50%)] opacity-0 transition-opacity duration-300 hover:opacity-100"
-                          style={{
-                            transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
-                          }}
                         />
                         {formState.submitting ? (
                           <>
