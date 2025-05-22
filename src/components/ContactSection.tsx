@@ -87,10 +87,11 @@ const ContactSection = () => {
     <section 
       ref={contactRef}
       id="contact" 
-      className="relative py-20 overflow-hidden bg-gray-950"
+      className="relative py-20 overflow-hidden bg-[#030014]"
     >
       {/* Background effects */}
-      <div className="absolute top-1/2 right-0 w-96 h-96 bg-blue-500/10 rounded-full filter blur-[150px]"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+      <div className="absolute top-1/2 right-0 w-96 h-96 bg-cyan-500/10 rounded-full filter blur-[150px]"></div>
       <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full filter blur-[150px]"></div>
       
       <div className="container mx-auto px-6 relative z-10">
@@ -115,25 +116,15 @@ const ContactSection = () => {
                 ].map((item, index) => (
                   <div 
                     key={index} 
-                    className="flex items-start gap-3"
+                    className="flex items-start gap-3 group hover:translate-x-2 transition-transform duration-300"
                     style={{ transitionDelay: `${0.3 + index * 0.1}s` }}
                   >
-                    <div className={`p-1 rounded-full ${theme.accentBg}`}>
+                    <div className={`p-1 rounded-full ${theme.accentBg} group-hover:scale-110 transition-transform duration-300`}>
                       <Check className="w-5 h-5 text-white" />
                     </div>
-                    <p className="text-gray-300">{item}</p>
+                    <p className="text-gray-300 group-hover:text-white transition-colors duration-300">{item}</p>
                   </div>
                 ))}
-              </div>
-              
-              <div className="p-6 border border-gray-800 rounded-xl bg-gray-900/50 backdrop-blur-sm">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className={`w-3 h-3 rounded-full ${theme.accentBg} animate-pulse`}></div>
-                  <p className="font-medium text-white">Our experts are currently available</p>
-                </div>
-                <p className="text-gray-400">
-                  Average response time: <span className="text-white">4 hours</span>
-                </p>
               </div>
             </div>
             
@@ -142,7 +133,7 @@ const ContactSection = () => {
               style={{ transitionDelay: '0.3s' }}
             >
               {formState.submitted ? (
-                <div className="h-full flex flex-col items-center justify-center text-center p-8 border border-gray-800 rounded-2xl bg-gray-900/50 backdrop-blur-sm">
+                <div className="h-full flex flex-col items-center justify-center text-center p-8 border border-white/10 rounded-2xl bg-white/5 backdrop-blur-sm">
                   <div className={`w-20 h-20 ${theme.accentBg} rounded-full flex items-center justify-center mb-6`}>
                     <Check className="w-10 h-10 text-white" />
                   </div>
@@ -160,7 +151,7 @@ const ContactSection = () => {
               ) : (
                 <form 
                   onSubmit={handleSubmit}
-                  className="p-8 border border-gray-800 rounded-2xl bg-gray-900/50 backdrop-blur-sm"
+                  className="p-8 border border-white/10 rounded-2xl bg-white/5 backdrop-blur-sm"
                 >
                   <h3 className="text-2xl font-bold mb-6">Get In Contact</h3>
                   
@@ -176,7 +167,7 @@ const ContactSection = () => {
                         value={formState.name}
                         onChange={handleChange}
                         required
-                        className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition"
+                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 transition"
                         placeholder="John Smith"
                       />
                     </div>
@@ -192,7 +183,7 @@ const ContactSection = () => {
                         value={formState.email}
                         onChange={handleChange}
                         required
-                        className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition"
+                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 transition"
                         placeholder="john@example.com"
                       />
                     </div>
@@ -207,7 +198,7 @@ const ContactSection = () => {
                         name="company"
                         value={formState.company}
                         onChange={handleChange}
-                        className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition"
+                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 transition"
                         placeholder="Your Company"
                       />
                     </div>
@@ -222,7 +213,7 @@ const ContactSection = () => {
                         value={formState.message}
                         onChange={handleChange}
                         rows={4}
-                        className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition"
+                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 transition"
                         placeholder="Tell us a bit about your automation needs..."
                       ></textarea>
                     </div>
@@ -234,7 +225,7 @@ const ContactSection = () => {
                         disabled={formState.submitting || !formState.name || !formState.email}
                         onMouseMove={handleMouseMove}
                         onMouseLeave={handleMouseLeave}
-                        className={`${theme.buttonStyles} w-full flex items-center justify-center gap-2 py-3 disabled:opacity-70 disabled:cursor-not-allowed relative bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-300`}
+                        className={`${theme.buttonStyles} w-full flex items-center justify-center gap-2 py-3 disabled:opacity-70 disabled:cursor-not-allowed relative`}
                         style={{
                           '--x': mousePosition.x + 'px',
                           '--y': mousePosition.y + 'px'

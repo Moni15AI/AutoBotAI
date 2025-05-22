@@ -20,14 +20,15 @@ const Header = () => {
     <header 
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-gray-900/90 backdrop-blur-md py-3 shadow-lg' 
+          ? 'bg-[#030014]/80 backdrop-blur-md py-3 border-b border-white/10' 
           : 'bg-transparent py-5'
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <a href="#" className="flex items-center gap-2 group">
-          <Bot className={`w-8 h-8 ${theme.accentColor} transition-all duration-300 group-hover:scale-110`} />
-          <span className="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+        <a href="#" className="flex items-center gap-2 group relative">
+          <div className="absolute -inset-2 rounded-lg bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 opacity-0 group-hover:opacity-100 blur transition duration-500"></div>
+          <Bot className={`w-8 h-8 ${theme.accentColor} relative transition-all duration-300 group-hover:scale-110`} />
+          <span className="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 relative">
             AutoBot AI
           </span>
         </a>
@@ -38,7 +39,7 @@ const Header = () => {
               <a
                 key={item}
                 href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
-                className="relative text-gray-300 hover:text-white transition-colors duration-300 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-400 after:to-purple-500 after:left-0 after:bottom-0 after:transition-all hover:after:w-full"
+                className="relative text-gray-300 hover:text-white transition-colors duration-300 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-cyan-400 after:via-blue-500 after:to-purple-600 after:left-0 after:-bottom-1 after:transition-all hover:after:w-full"
               >
                 {item}
               </a>
@@ -48,7 +49,7 @@ const Header = () => {
             href="#contact"
             className={`${theme.buttonStyles} hover:scale-105 transform transition`}
           >
-            Book a Call
+            <span className="relative z-10">Book a Call</span>
           </a>
         </div>
         
@@ -62,7 +63,7 @@ const Header = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 bg-gray-950/95 backdrop-blur-lg z-40 transition-all duration-300 flex flex-col justify-center items-center gap-8 ${
+        className={`fixed inset-0 bg-[#030014]/95 backdrop-blur-lg z-40 transition-all duration-300 flex flex-col justify-center items-center gap-8 ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         } md:hidden`}
       >

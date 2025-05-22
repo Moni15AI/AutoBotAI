@@ -34,32 +34,168 @@ const Hero = () => {
     });
   }, [isInView]);
 
-  // Remove Spline watermark after component mounts
   useEffect(() => {
     const removeWatermark = () => {
+      // Remove any existing cleanup styles
+      document.querySelectorAll('style[data-spline-cleanup]').forEach(el => el.remove());
+
+      // Create new style element with comprehensive rules
       const style = document.createElement('style');
+      style.setAttribute('data-spline-cleanup', 'true');
       style.textContent = `
-        spline-viewer::part(watermark) { 
+        /* Hide all possible watermark elements */
+        spline-viewer::part(watermark),
+        spline-viewer::part(logo),
+        spline-viewer [data-name="watermark"],
+        spline-viewer [data-name="logo"],
+        spline-viewer div[style*="position: absolute"][style*="bottom"],
+        spline-viewer div[style*="z-index: 999"],
+        spline-viewer div[style*="pointer-events: all"],
+        spline-viewer div[style*="font-family: Inter"],
+        spline-viewer div[style*="font-size: 12px"],
+        spline-viewer div[style*="background: rgba"],
+        spline-viewer div[style*="backdrop-filter"],
+        spline-viewer a[href*="spline"],
+        spline-viewer div:has(> a[href*="spline"]) {
           display: none !important;
           opacity: 0 !important;
           visibility: hidden !important;
           pointer-events: none !important;
+          position: absolute !important;
+          width: 0 !important;
+          height: 0 !important;
+          overflow: hidden !important;
+          clip: rect(0 0 0 0) !important;
+          clip-path: inset(100%) !important;
+          margin: -1px !important;
+          padding: 0 !important;
+          border: 0 !important;
+          transform: scale(0) !important;
+          max-width: 0 !important;
+          max-height: 0 !important;
+          z-index: -9999 !important;
         }
-        spline-viewer::part(logo) {
-          display: none !important;
-        }
+        
+        /* Ensure viewer itself doesn't capture pointer events */
         spline-viewer {
           pointer-events: none !important;
         }
+
+        /* Additional safety measures */
+        spline-viewer::before,
+        spline-viewer::after {
+          display: none !important;
+          content: none !important;
+        }
       `;
       document.head.appendChild(style);
+
+      // Comprehensive list of selectors to match any possible watermark element
+      const selectors = [
+        '[data-name="watermark"]',
+        '[data-name="logo"]',
+        'div[style*="position: absolute"][style*="bottom"]',
+        'div[style*="z-index: 999"]',
+        'div[style*="pointer-events: all"]',
+        'div[style*="font-family: Inter"]',
+        'div[style*="font-size: 12px"]',
+        'div[style*="background: rgba"]',
+        'div[style*="backdrop-filter"]',
+        'a[href*="spline"]',
+        'div:has(> a[href*="spline"])'
+      ];
+
+      // Function to aggressively remove elements
+      const removeElement = (element: Element) => {
+        if (element instanceof HTMLElement) {
+          element.style.cssText = `
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            position: absolute !important;
+            width: 0 !important;
+            height: 0 !important;
+            overflow: hidden !important;
+            clip: rect(0 0 0 0) !important;
+            clip-path: inset(100%) !important;
+            margin: -1px !important;
+            padding: 0 !important;
+            border: 0 !important;
+            transform: scale(0) !important;
+            max-width: 0 !important;
+            max-height: 0 !important;
+            z-index: -9999 !important;
+          `;
+          element.remove();
+        }
+      };
+
+      // Remove existing elements
+      selectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(removeElement);
+      });
+
+      // Create mutation observer with aggressive removal strategy
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          // Handle added nodes
+          mutation.addedNodes.forEach((node) => {
+            if (node instanceof HTMLElement) {
+              // Check if the element matches any of our selectors
+              if (selectors.some(selector => node.matches(selector))) {
+                removeElement(node);
+              }
+              // Also check children of added nodes
+              selectors.forEach(selector => {
+                node.querySelectorAll(selector).forEach(removeElement);
+              });
+            }
+          });
+
+          // Handle attribute changes that might reveal watermark
+          if (mutation.type === 'attributes' && mutation.target instanceof HTMLElement) {
+            if (selectors.some(selector => mutation.target.matches(selector))) {
+              removeElement(mutation.target);
+            }
+          }
+        });
+      });
+
+      // Observe the entire document with all possible mutation types
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['style', 'class'],
+        characterData: true
+      });
+
+      return observer;
     };
 
-    removeWatermark();
+    // Initial aggressive removal
+    const observer = removeWatermark();
     
-    // Ensure watermark stays removed
-    const interval = setInterval(removeWatermark, 100);
-    return () => clearInterval(interval);
+    // Continuous monitoring at a very short interval
+    const interval = setInterval(removeWatermark, 50);
+    
+    // Additional check for shadow DOM elements
+    const shadowCheck = setInterval(() => {
+      document.querySelectorAll('*').forEach(element => {
+        if (element.shadowRoot) {
+          removeWatermark();
+        }
+      });
+    }, 100);
+
+    // Cleanup function
+    return () => {
+      observer.disconnect();
+      clearInterval(interval);
+      clearInterval(shadowCheck);
+      document.querySelectorAll('style[data-spline-cleanup]').forEach(el => el.remove());
+    };
   }, []);
 
   return (
